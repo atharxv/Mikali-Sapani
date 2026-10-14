@@ -1,0 +1,16 @@
+# System & OS Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporary & Editor
+*.tmp
+*.log
+.vscode/
+.idea/
+
+# Node
+node_modules/
+package-lock.json

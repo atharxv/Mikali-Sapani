@@ -1,0 +1,539 @@
+/* ==========================================================================
+   MIKALI SAPANI — SIGNATURE LUXURY LOADING SCREEN
+   Palette: Deep Wine Red (#731D13) & Cashmere Cream (#F5EBE1)
+   ========================================================================== */
+
+:root {
+  /* Brand Red Palette */
+  --mikali-red: #731D13;
+  --mikali-red-dark: #4e120b;
+  --mikali-red-deep: #380a05;
+  --mikali-red-glow: #8e2518;
+  --mikali-red-vignette: radial-gradient(ellipse at 50% 45%, #882317 0%, #731D13 55%, #460f08 100%);
+  --loader-bg-image: url('Mikali%20Sapani%20Red%20Background.png');
+
+  /* Cream Palette (#fff9e7 pure luxury cream) */
+  --cream-primary: #fff9e7;
+  --cream-light: #ffffff;
+  --cream-shadow: #e8dcc4;
+  --cream-stroke: rgba(255, 249, 231, 0.28);
+  --cream-stroke-dim: rgba(255, 249, 231, 0.12);
+
+  /* Animation Durations */
+  --loader-duration: 2.8s;
+  --ease-luxury: cubic-bezier(0.25, 1, 0.35, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fonts */
+  --font-serif: 'Cinzel', 'Cormorant Garamond', 'Didot', 'Bodoni MT', serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Base resets for loader */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   LOADER FULLSCREEN OVERLAY
+   ========================================================================== */
+.mikali-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--mikali-red);
+  background-image: var(--loader-bg-image);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.1s cubic-bezier(0.7, 0, 0.3, 1),
+              visibility 1.1s cubic-bezier(0.7, 0, 0.3, 1),
+              transform 1.1s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+/* Dismissed state when entering site */
+.mikali-loader-overlay.is-dismissed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(1.04);
+}
+
+/* Immediate zero-delay reset mode - snaps all elements cleanly to 0% */
+.mikali-loader-overlay.is-resetting,
+.mikali-loader-overlay.is-resetting * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ==========================================================================
+   CENTER STAGE & EMBLEM
+   ========================================================================== */
+.loader-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  max-width: 90vw;
+}
+
+/* Emblem Container */
+.emblem-container {
+  position: relative;
+  width: 170px;
+  height: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .emblem-container {
+    width: 210px;
+    height: 230px;
+    margin-bottom: 30px;
+  }
+}
+
+/* The SVG */
+.emblem-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 14px 28px rgba(35, 7, 3, 0.45));
+  transition: filter 0.8s var(--ease-luxury);
+}
+
+/* Silhouette Layer (debossed tone-on-tone base in red) */
+.silhouette-group {
+  filter: url(#emblemDeboss);
+}
+
+.silhouette-path {
+  fill: #2c0603;
+  opacity: 1;
+}
+
+/* Hairline outline stroke */
+.stroke-path {
+  fill: none;
+  stroke: rgba(255, 249, 231, 0.16);
+  stroke-width: 0.75;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Mode: Calligraphy Draw */
+.mode-calligraphy .stroke-path.p1 {
+  stroke: var(--cream-primary);
+  stroke-width: 1.1;
+  stroke-dasharray: 410;
+  stroke-dashoffset: 410;
+  animation: strokeDraw 1.6s var(--ease-luxury) forwards;
+}
+
+.mode-calligraphy .stroke-path.p2 {
+  stroke: var(--cream-primary);
+  stroke-width: 1.1;
+  stroke-dasharray: 190;
+  stroke-dashoffset: 190;
+  animation: strokeDraw 1.4s var(--ease-luxury) 0.2s forwards;
+}
+
+.mode-calligraphy .stroke-path.p3 {
+  stroke: var(--cream-primary);
+  stroke-width: 1.1;
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  animation: strokeDraw 1.2s var(--ease-luxury) 0.4s forwards;
+}
+
+@keyframes strokeDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==========================================================================
+   LIQUID WAVE FILL MECHANISM
+   ========================================================================== */
+.liquid-rise-group {
+  /* Starts from below the bottom of emblem (y=327) up to y=215 (100% full) */
+  transform: translateY(112px);
+  will-change: transform;
+}
+
+/* Animated horizontally running waves */
+.liquid-wave-front {
+  fill: var(--cream-primary);
+  animation: waveScrollFront 1.8s linear infinite;
+}
+
+.liquid-wave-back {
+  fill: var(--cream-shadow);
+  opacity: 0.65;
+  animation: waveScrollBack 2.4s linear infinite;
+}
+
+.liquid-solid-body {
+  fill: var(--cream-primary);
+}
+
+.liquid-meniscus {
+  stroke: var(--cream-light);
+  stroke-width: 1.1;
+  opacity: 0.8;
+}
+
+@keyframes waveScrollFront {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50px); }
+}
+
+@keyframes waveScrollBack {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50px); }
+}
+
+/* Mode: Radial Bloom */
+.bloom-circle {
+  transform-origin: 389.875px 272.015px;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform var(--loader-duration) var(--ease-luxury),
+              opacity 0.6s ease;
+}
+
+.mode-bloom.is-animating .bloom-circle {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+/* Mode: Calligraphy Flood */
+.calligraphy-flood-rect {
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-smooth);
+}
+
+.mode-calligraphy.is-flooding .calligraphy-flood-rect {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   COMPLETION EFFECTS (100% Filled)
+   ========================================================================== */
+/* Diagonal Specular Sheen Sweep */
+.specular-sheen {
+  opacity: 0;
+  transform: translateX(-180px) rotate(25deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.is-complete .specular-sheen {
+  opacity: 1;
+  animation: sheenSweep 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-180px) translateY(-50px) rotate(25deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(180px) translateY(50px) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+/* No glow around the emblem — pure luxury deboss & crisp cream fill */
+.emblem-halo {
+  display: none !important;
+}
+
+.is-complete .emblem-svg {
+  filter: drop-shadow(0 14px 28px rgba(35, 7, 3, 0.45));
+}
+
+/* ==========================================================================
+   TYPOGRAPHY & BRAND WORDMARK
+   ========================================================================== */
+.brand-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.brand-identity.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s var(--ease-luxury) 0.2s,
+              transform 1s var(--ease-luxury) 0.2s;
+}
+
+.brand-wordmark-wrap {
+  width: 250px;
+  max-width: 86vw;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 6px;
+  transition: transform 0.8s var(--ease-luxury);
+}
+
+@media (min-width: 768px) {
+  .brand-wordmark-wrap {
+    width: 330px;
+  }
+}
+
+.brand-wordmark-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  color: var(--cream-primary);
+  fill: currentColor;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.5));
+  transition: color 0.4s ease, filter 0.4s ease;
+}
+
+.is-complete .brand-wordmark-svg {
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.5));
+}
+
+.brand-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: 0.36em;
+  text-indent: 0.36em;
+  color: var(--cream-primary);
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+  transition: color 0.4s ease;
+}
+
+@media (min-width: 768px) {
+  .brand-title {
+    font-size: 1.85rem;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+  }
+}
+
+.brand-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  opacity: 0.6;
+}
+
+.brand-divider-line {
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cream-stroke), transparent);
+}
+
+.brand-divider-diamond {
+  width: 4px;
+  height: 4px;
+  background: var(--cream-primary);
+  transform: rotate(45deg);
+}
+
+.brand-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.38em;
+  text-indent: 0.38em;
+  color: var(--cream-primary);
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .brand-subtitle {
+    font-size: 0.72rem;
+  }
+}
+
+/* ==========================================================================
+   PROGRESS NUMBERS & MINIMAL TRACK
+   ========================================================================== */
+.loader-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.5s ease;
+}
+
+.loader-percentage {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: var(--cream-primary);
+  opacity: 0.85;
+}
+
+.loader-percentage .pct-sym {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+/* Minimal Luxury Hairline Progress Bar */
+.minimal-progress-bar {
+  position: relative;
+  width: 140px;
+  height: 1.5px;
+  background: rgba(245, 235, 225, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.minimal-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--cream-shadow), var(--cream-primary), var(--cream-light));
+  box-shadow: none;
+  border-radius: 2px;
+  transition: width 0.08s linear;
+}
+
+/* ==========================================================================
+   ENTER & RESET ACTION BUTTONS
+   ========================================================================== */
+.loader-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 35;
+}
+
+.is-complete .loader-actions,
+.is-complete .loader-enter-btn {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 0.6s var(--ease-luxury) 0.1s, transform 0.6s var(--ease-luxury) 0.1s;
+}
+
+.loader-btn,
+.loader-enter-btn {
+  background: transparent;
+  border: 1px solid var(--cream-stroke);
+  color: var(--cream-primary);
+  font-family: var(--font-serif);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  cursor: pointer;
+  border-radius: 40px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.35s var(--ease-luxury);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loader-enter-btn:hover {
+  background: var(--cream-primary);
+  color: var(--mikali-red);
+  border-color: var(--cream-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   THE SINGLE LUXURY RESET BUTTON (Top-Right Corner)
+   ========================================================================== */
+.loader-reset-btn {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  background: rgba(44, 9, 5, 0.7);
+  border: 1px solid rgba(255, 249, 231, 0.28);
+  color: var(--cream-primary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 9px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s var(--ease-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100005;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.loader-reset-btn:hover {
+  background: rgba(255, 249, 231, 0.15);
+  border-color: var(--cream-primary);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.loader-reset-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.loader-reset-btn.is-blank-state {
+  border-color: rgba(255, 249, 231, 0.45);
+  background: rgba(85, 17, 9, 0.85);
+}
+
+.loader-enter-btn:active {
+  transform: translateY(0) scale(0.98);
+}
