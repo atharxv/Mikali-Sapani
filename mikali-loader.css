@@ -333,8 +333,8 @@
 }
 
 .brand-wordmark-wrap {
-  width: 250px;
-  max-width: 86vw;
+  width: clamp(280px, 82vw, 400px);
+  max-width: 90vw;
   height: auto;
   display: flex;
   align-items: center;
@@ -345,7 +345,7 @@
 
 @media (min-width: 768px) {
   .brand-wordmark-wrap {
-    width: 330px;
+    width: clamp(380px, 34vw, 480px);
   }
 }
 
@@ -358,6 +358,16 @@
   fill: currentColor;
   filter: none !important;
   transition: color 0.5s var(--ease-smooth);
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}
+
+/* Optical stroke reinforcement: prevents high-contrast serif hairlines (like K diagonal) from dropping out */
+.brand-wordmark-svg path {
+  stroke: currentColor;
+  stroke-width: 0.75px;
+  stroke-linejoin: round;
+  stroke-miterlimit: 4;
 }
 
 .is-complete .brand-wordmark-svg {
