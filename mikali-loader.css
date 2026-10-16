@@ -1,23 +1,30 @@
 /* ==========================================================================
    MIKALI SAPANI — SIGNATURE LUXURY LOADING SCREEN
-   Palette: Deep Wine Red (#731D13) & Cashmere Cream (#F5EBE1)
+   Curated Haute Horlogerie / Joaillerie Palette:
+   Black: #171717 | Red: #7B1902 | Gold: #A8894F | White: #FFF7E4
    ========================================================================== */
 
 :root {
-  /* Brand Red Palette */
-  --mikali-red: #731D13;
-  --mikali-red-dark: #4e120b;
-  --mikali-red-deep: #380a05;
-  --mikali-red-glow: #8e2518;
-  --mikali-red-vignette: radial-gradient(ellipse at 50% 45%, #882317 0%, #731D13 55%, #460f08 100%);
-  --loader-bg-image: url('Mikali%20Sapani%20Red%20Background.png');
+  /* Exact Brand Palette Tokens */
+  --color-black: #171717;
+  --color-red: #7B1902;
+  --color-gold: #A8894F;
+  --color-white: #FFF7E4;
 
-  /* Cream Palette (#fff9e7 pure luxury cream) */
-  --cream-primary: #fff9e7;
-  --cream-light: #ffffff;
-  --cream-shadow: #e8dcc4;
-  --cream-stroke: rgba(255, 249, 231, 0.28);
-  --cream-stroke-dim: rgba(255, 249, 231, 0.12);
+  /* Active Theme Variables (default: White on Red) */
+  --loader-bg-color: #7B1902;
+  --loader-bg-image: url('Mikali%20Sapani%20Red%20Background.png');
+  --loader-fg-color: #FFF7E4;
+  --loader-fg-light: #ffffff;
+  --loader-fg-shadow: #e8dcc4;
+
+  /* Dynamic Component Tokens */
+  --emblem-outline-stroke: rgba(255, 247, 228, 0.38);
+  --action-btn-border: rgba(255, 247, 228, 0.32);
+  --action-btn-text: #FFF7E4;
+  --reset-btn-bg: rgba(44, 9, 5, 0.72);
+  --reset-btn-border: rgba(255, 247, 228, 0.28);
+  --reset-btn-color: #FFF7E4;
 
   /* Animation Durations */
   --loader-duration: 2.8s;
@@ -43,11 +50,7 @@
   z-index: 99999;
   width: 100vw;
   height: 100vh;
-  background-color: var(--mikali-red);
-  background-image: var(--loader-bg-image);
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: var(--loader-bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +62,42 @@
   visibility: visible;
   transition: opacity 1.1s cubic-bezier(0.7, 0, 0.3, 1),
               visibility 1.1s cubic-bezier(0.7, 0, 0.3, 1),
-              transform 1.1s cubic-bezier(0.7, 0, 0.3, 1);
+              transform 1.1s cubic-bezier(0.7, 0, 0.3, 1),
+              background-color 0.6s var(--ease-smooth);
+}
+
+/* Background Texture Layer — Recreates luxury leather grain across all themes */
+.loader-bg-texture {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: var(--loader-bg-image);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease-smooth), filter 0.6s var(--ease-smooth);
+}
+
+/* Red Background: Signature crimson leather texture */
+.mikali-loader-overlay.bg-type-red .loader-bg-texture {
+  opacity: 1;
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+/* Black Background: Recreates deep noir textured leather grain */
+.mikali-loader-overlay.bg-type-black .loader-bg-texture {
+  opacity: 1;
+  filter: grayscale(1) brightness(0.24) contrast(1.2);
+  mix-blend-mode: luminosity;
+}
+
+/* White Background: Recreates warm ivory textured leather grain */
+.mikali-loader-overlay.bg-type-white .loader-bg-texture {
+  opacity: 0.22;
+  filter: grayscale(1) brightness(1.9) contrast(0.85);
+  mix-blend-mode: multiply;
 }
 
 /* Dismissed state when entering site */
@@ -111,38 +149,33 @@
   }
 }
 
-/* The SVG */
+/* The SVG — Clean plain outline, zero glow */
 .emblem-svg {
   width: 100%;
   height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 14px 28px rgba(35, 7, 3, 0.45));
-  transition: filter 0.8s var(--ease-luxury);
+  filter: none !important;
 }
 
-/* Silhouette Layer (debossed tone-on-tone base in red) */
+/* Plain Effect / No deboss: silhouette is hidden */
 .silhouette-group {
-  filter: url(#emblemDeboss);
+  display: none !important;
 }
 
-.silhouette-path {
-  fill: #2c0603;
-  opacity: 1;
-}
-
-/* Hairline outline stroke */
+/* Pure refined hairline outline stroke */
 .stroke-path {
   fill: none;
-  stroke: rgba(255, 249, 231, 0.16);
-  stroke-width: 0.75;
+  stroke: var(--emblem-outline-stroke);
+  stroke-width: 0.95;
   stroke-miterlimit: 10;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: stroke 0.5s var(--ease-smooth);
 }
 
 /* Mode: Calligraphy Draw */
 .mode-calligraphy .stroke-path.p1 {
-  stroke: var(--cream-primary);
+  stroke: var(--loader-fg-color);
   stroke-width: 1.1;
   stroke-dasharray: 410;
   stroke-dashoffset: 410;
@@ -150,7 +183,7 @@
 }
 
 .mode-calligraphy .stroke-path.p2 {
-  stroke: var(--cream-primary);
+  stroke: var(--loader-fg-color);
   stroke-width: 1.1;
   stroke-dasharray: 190;
   stroke-dashoffset: 190;
@@ -158,7 +191,7 @@
 }
 
 .mode-calligraphy .stroke-path.p3 {
-  stroke: var(--cream-primary);
+  stroke: var(--loader-fg-color);
   stroke-width: 1.1;
   stroke-dasharray: 150;
   stroke-dashoffset: 150;
@@ -182,24 +215,28 @@
 
 /* Animated horizontally running waves */
 .liquid-wave-front {
-  fill: var(--cream-primary);
+  fill: var(--loader-fg-color);
   animation: waveScrollFront 1.8s linear infinite;
+  transition: fill 0.5s var(--ease-smooth);
 }
 
 .liquid-wave-back {
-  fill: var(--cream-shadow);
+  fill: var(--loader-fg-shadow);
   opacity: 0.65;
   animation: waveScrollBack 2.4s linear infinite;
+  transition: fill 0.5s var(--ease-smooth);
 }
 
 .liquid-solid-body {
-  fill: var(--cream-primary);
+  fill: var(--loader-fg-color);
+  transition: fill 0.5s var(--ease-smooth);
 }
 
 .liquid-meniscus {
-  stroke: var(--cream-light);
+  stroke: var(--loader-fg-light);
   stroke-width: 1.1;
   opacity: 0.8;
+  transition: stroke 0.5s var(--ease-smooth);
 }
 
 @keyframes waveScrollFront {
@@ -266,13 +303,13 @@
   }
 }
 
-/* No glow around the emblem — pure luxury deboss & crisp cream fill */
+/* No glow around the emblem */
 .emblem-halo {
   display: none !important;
 }
 
 .is-complete .emblem-svg {
-  filter: drop-shadow(0 14px 28px rgba(35, 7, 3, 0.45));
+  filter: none !important;
 }
 
 /* ==========================================================================
@@ -317,14 +354,14 @@
   height: auto;
   display: block;
   overflow: visible;
-  color: var(--cream-primary);
+  color: var(--loader-fg-color);
   fill: currentColor;
-  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.5));
-  transition: color 0.4s ease, filter 0.4s ease;
+  filter: none !important;
+  transition: color 0.5s var(--ease-smooth);
 }
 
 .is-complete .brand-wordmark-svg {
-  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.5));
+  filter: none !important;
 }
 
 .brand-title {
@@ -463,8 +500,8 @@
 .loader-btn,
 .loader-enter-btn {
   background: transparent;
-  border: 1px solid var(--cream-stroke);
-  color: var(--cream-primary);
+  border: 1px solid var(--action-btn-border);
+  color: var(--action-btn-text);
   font-family: var(--font-serif);
   font-size: 0.74rem;
   font-weight: 500;
@@ -483,11 +520,15 @@
 }
 
 .loader-enter-btn:hover {
-  background: var(--cream-primary);
-  color: var(--mikali-red);
-  border-color: var(--cream-primary);
+  background: var(--loader-fg-color);
+  color: var(--loader-bg-color);
+  border-color: var(--loader-fg-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
+}
+
+.loader-enter-btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* ==========================================================================
@@ -497,9 +538,9 @@
   position: absolute;
   top: 24px;
   right: 28px;
-  background: rgba(44, 9, 5, 0.7);
-  border: 1px solid rgba(255, 249, 231, 0.28);
-  color: var(--cream-primary);
+  background: var(--reset-btn-bg);
+  border: 1px solid var(--reset-btn-border);
+  color: var(--reset-btn-color);
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 500;
@@ -515,12 +556,12 @@
   align-items: center;
   gap: 8px;
   z-index: 100005;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
 }
 
 .loader-reset-btn:hover {
-  background: rgba(255, 249, 231, 0.15);
-  border-color: var(--cream-primary);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--loader-fg-color);
   color: #fff;
   transform: translateY(-2px);
 }
@@ -530,10 +571,109 @@
 }
 
 .loader-reset-btn.is-blank-state {
-  border-color: rgba(255, 249, 231, 0.45);
-  background: rgba(85, 17, 9, 0.85);
+  border-color: var(--action-btn-border);
+  opacity: 0.9;
 }
 
-.loader-enter-btn:active {
-  transform: translateY(0) scale(0.98);
+/* ==========================================================================
+   LUXURY PRESET SWITCHER DOCK
+   ========================================================================== */
+.loader-preset-dock {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100002;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 16px;
+  background: rgba(18, 18, 18, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  max-width: 95vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.loader-preset-dock::-webkit-scrollbar {
+  display: none;
+}
+
+.preset-dock-title {
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0 4px 0 6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  user-select: none;
+}
+
+.preset-chips-track {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preset-chip {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.preset-chip:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.preset-chip.is-active {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Dual-Tone Swatch: Outer ring is background color, inner circle is foreground color */
+.preset-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--swatch-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+
+.preset-swatch::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background: var(--swatch-fg);
 }

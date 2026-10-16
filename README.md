@@ -1,31 +1,51 @@
-# Mikali Sapani — Signature Loading Screen Animation
+# Mikali Sapani — Signature Luxury Loading Screen Animation
 
-A bespoke, luxury loading screen animation created from the original vector emblem `Mikali sapani logo file.svg`.
+A bespoke, luxury loading screen animation created from the original vector emblem and official wordmark for **MIKALI SAPANI**.
 
-Featuring a deep wine red canvas (`#731D13`), an authentic stamped debossed emblem cavity with hairline outline, and an organic liquid cream (`#fff9e7`) wave fill that rises cleanly through the emblem contours from bottom to top, concluding with a 45° specular sheen sweep and tracked luxury serif typography.
+Featuring 6 switchable haute horlogerie / joaillerie color presets, an authentic leather grain texture layer across all themes, a refined plain outline hairline emblem, and an organic liquid wave fill rising cleanly through the emblem contours from bottom to top, concluding with a diagonal specular sheen sweep and tracked luxury serif typography.
+
+---
+
+## 🎨 Curated Brand Palette & Presets
+
+The loading screen incorporates four core luxury tones:
+- **Black**: `#171717` (Deep matte obsidian)
+- **Red**: `#7B1902` (Signature rich crimson)
+- **Gold**: `#A8894F` (Warm champagne satin gold)
+- **White**: `#FFF7E4` (Warm luminous ivory cream)
+
+### Available Color Presets
+Users can switch between presets via the bottom **Palette Dock** or keyboard shortcuts (`1` to `6`):
+
+| # | Preset Key | Preset Name | Foreground (Fill & Strokes) | Background Canvas | Texture Treatment |
+|---|---|---|---|---|---|
+| **Default** | `white_on_red` | **White on Red** | `#FFF7E4` | `#7B1902` | Signature crimson leather background (`Mikali Sapani Red Background.png`) |
+| **1** | `red_on_black` | **Red on Black** | `#7B1902` | `#171717` | Recreated deep noir leather grain (`luminosity`, `brightness 0.24`) |
+| **2** | `gold_on_white` | **Gold on White** | `#A8894F` | `#FFF7E4` | Recreated warm ivory leather grain (`multiply`, `opacity 0.22`) |
+| **3** | `gold_on_black` | **Gold on Black** | `#A8894F` | `#171717` | Recreated deep noir leather grain (`luminosity`, `brightness 0.24`) |
+| **4** | `gold_on_red` | **Gold on Red** | `#A8894F` | `#7B1902` | Signature crimson leather background (`Mikali Sapani Red Background.png`) |
+| **5** | `red_on_white` | **Red on White** | `#7B1902` | `#FFF7E4` | Recreated warm ivory leather grain (`multiply`, `opacity 0.22`) |
 
 ---
 
 ## 🌟 Key Features
 
-1. **Exact Brand Palette & Background**:
-   - Canvas: Real luxury red textile texture from [`Mikali Sapani Red Background.png`](file:///c:/Users/athar/OneDrive/Desktop/Prime%20Digital/Mikali%20Sapani/Mikali%20Sapani%20Red%20Background.png) rendered naturally without artificial radial glows or vignettes.
-   - Fallback Base: `#731D13` (Original Adobe Illustrator Tuscan wine red from the SVG).
-   - Cream Tone: `#fff9e7` (Signature luxury cream) with liquid wave rise starting directly from the bottom of the emblem cavity.
-2. **Authentic Stamped Debossed Effect**:
-   - Crafted SVG filter (`#emblemDeboss`) applying recessed inner shadow (`#080201`) and beveled light rim highlight (`#ffd5c2`) to create a physical stamped leather deboss cavity.
-   - Blank baseline state cleanly showcases the sunken emblem crest before liquid fill begins.
-3. **No Glow Around the Emblem**:
-   - Zero artificial halo or glowing drop-shadows around the emblem or wordmark.
-   - Clean, crisp, high-end editorial physical aesthetic.
-4. **Single Luxury Reset Button**:
-   - Exactly 1 reset button on the entire loading screen (`.loader-reset-btn`), located in the top-right corner.
-   - Clicking it makes the emblem immediately go back to being blank (0% empty cavity).
-   - Toggles to `▶ Play` allowing users to replay the fill at will.
-5. **Completion State**:
-   - 45° diagonal specular gleam sweep across the filled vector shape.
-   - Official luxury vector wordmark **"MIKALI SAPANI"** seamlessly fades and tracks in signature cream `#fff9e7`.
-   - "ENTER BOUTIQUE →" action button for entering the main boutique website.
+1. **Clean Plain Outline Emblem (No Deboss Filter)**:
+   - Ultra-fine hairline outline strokes (`.stroke-path`) resting cleanly against the luxury textured background.
+   - Zero deboss filter cavities or artificial glows.
+2. **Recreated Luxury Leather Texture**:
+   - Red themes retain the signature physical red leather texture.
+   - Black and White themes authentically recreate deep noir and warm ivory leather grain using CSS filters and blend modes.
+3. **Single Luxury Reset Button**:
+   - Exactly 1 reset button on screen (`#mainResetBtn`), anchored in the top-right corner.
+   - Instantly snaps the emblem back to a completely blank outline state.
+   - Toggles to `▶ Play` allowing users to replay the wave fill from 0% anytime.
+4. **Organic Wave Fill & Completion Sheen**:
+   - Fluid wave rising upwards strictly clipped to the emblem paths.
+   - Specular diagonal sheen sweep upon reaching 100%.
+   - Seamlessly reveals the official vector wordmark **"MIKALI SAPANI"**.
+5. **Interactive Preset Dock**:
+   - Elegant bottom floating dock with dual-tone concentric swatches for instant switching.
 
 ---
 
@@ -36,12 +56,10 @@ Mikali Sapani/
 ├── Mikali Sapani Red Background.png # High-resolution brand luxury red background texture
 ├── Mikali Sapani Wordmark.svg       # Original bespoke vector wordmark file
 ├── Mikali sapani logo file.svg      # Original Adobe Illustrator logo emblem file
-├── index.html                       # Clean showcase & live boutique demo
-├── mikali-loader.css                # Standalone modular stylesheet & tokens
-├── mikali-loader.js                 # Standalone vanilla JavaScript controller
-├── MikaliLoader.jsx                 # React / Next.js component
-├── mikali-emblem.svg                # Tight-cropped, optimized standalone SVG emblem
-├── mikali-wordmark.svg              # Tight-cropped standalone SVG wordmark (fill="currentColor")
+├── index.html                       # Live interactive showcase & boutique demo
+├── mikali-loader.css                # Modular stylesheet with CSS variables & texture filters
+├── mikali-loader.js                 # Standalone vanilla JavaScript controller & presets
+├── MikaliLoader.jsx                 # React / Next.js component with preset dock support
 └── README.md                        # Documentation & integration guide
 ```
 
@@ -55,38 +73,22 @@ Mikali Sapani/
 <script src="mikali-loader.js"></script>
 ```
 
-### 2. Add Loader HTML Markup
+### 2. Markup
 ```html
 <div class="mikali-loader-overlay mode-wave" id="mikaliLoader">
+  <!-- Recreated leather grain texture layer -->
+  <div class="loader-bg-texture" id="loaderBgTexture" aria-hidden="true"></div>
+
   <!-- The Single Reset Button -->
-  <button class="loader-reset-btn" id="mainResetBtn" onclick="window.mikaliInstance.toggleResetBlank()">
+  <button class="loader-reset-btn" id="mainResetBtn">
     &#8635; Reset
   </button>
 
   <div class="loader-stage">
-    <!-- Emblem with Deboss Filter -->
+    <!-- Emblem SVG -->
     <div class="emblem-container">
       <svg class="emblem-svg" viewBox="335 212 110 120" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="emblemDeboss" x="-25%" y="-25%" width="150%" height="150%">
-            <feOffset dx="1.4" dy="2" in="SourceAlpha" result="offDark"/>
-            <feGaussianBlur stdDeviation="1.5" in="offDark" result="blurDark"/>
-            <feComposite operator="out" in="SourceAlpha" in2="blurDark" result="invDark"/>
-            <feFlood flood-color="#080201" flood-opacity="0.95" result="cDark"/>
-            <feComposite operator="in" in="cDark" in2="invDark" result="shadow"/>
-
-            <feOffset dx="-0.9" dy="-1.1" in="SourceAlpha" result="offLight"/>
-            <feGaussianBlur stdDeviation="0.8" in="offLight" result="blurLight"/>
-            <feComposite operator="out" in="SourceAlpha" in2="blurLight" result="invLight"/>
-            <feFlood flood-color="#ffd5c2" flood-opacity="0.32" result="cLight"/>
-            <feComposite operator="in" in="cLight" in2="invLight" result="highlight"/>
-
-            <feMerge>
-              <feMergeNode in="SourceGraphic"/>
-              <feMergeNode in="shadow"/>
-              <feMergeNode in="highlight"/>
-            </feMerge>
-          </filter>
           <clipPath id="logoShapeClip">
             <path d="M346.9,285.14c0.24-0.72..."/>
             <path d="M394.82,287.06..."/>
@@ -94,32 +96,38 @@ Mikali Sapani/
           </clipPath>
         </defs>
 
-        <!-- Debossed Silhouette Base -->
-        <g class="silhouette-group" filter="url(#emblemDeboss)">
-          <path class="silhouette-path" d="..."/>
-        </g>
-        <!-- Hairline Stroke -->
+        <!-- Plain Hairline Stroke -->
         <g class="stroke-group">
           <path class="stroke-path p1" d="..."/>
+          <path class="stroke-path p2" d="..."/>
+          <path class="stroke-path p3" d="..."/>
         </g>
-        <!-- Clipped Liquid Cream Wave Fill (#fff9e7) -->
+
+        <!-- Liquid Wave Fill -->
         <g clip-path="url(#logoShapeClip)">
           <g class="liquid-rise-group">
+            <path class="liquid-wave-back" d="..." />
             <path class="liquid-wave-front" d="..." />
             <rect class="liquid-solid-body" x="280" y="215" width="250" height="140" />
+            <line class="liquid-meniscus" x1="300" y1="215" x2="470" y2="215" />
           </g>
           <rect class="specular-sheen" x="300" y="190" width="180" height="150" fill="url(#sheenSweepGrad)" />
         </g>
       </svg>
     </div>
 
-    <!-- Wordmark -->
+    <!-- Official Wordmark -->
     <div class="brand-identity">
       <div class="brand-wordmark-wrap">
         <svg class="brand-wordmark-svg" viewBox="360 345 720 85">...</svg>
       </div>
     </div>
   </div>
+
+  <!-- Preset Dock -->
+  <nav class="loader-preset-dock" aria-label="Color Presets">
+    <!-- Preset chips rendered here or via mikali-loader.js -->
+  </nav>
 </div>
 ```
 
@@ -129,12 +137,15 @@ const loader = new MikaliLoader({
   containerId: 'mikaliLoader',
   mode: 'wave',
   duration: 2800,
-  creamColor: '#fff9e7', // Signature cream tone
+  preset: 'white_on_red', // Default signature preset
   autoDismiss: false,
   onComplete: () => {
     console.log('Loading animation complete');
   }
 });
+
+// Switch presets dynamically at runtime
+loader.setPreset('red_on_black');
 ```
 
 ---
@@ -143,7 +154,7 @@ const loader = new MikaliLoader({
 
 ```jsx
 import React from 'react';
-import MikaliLoader from './MikaliLoader';
+import MikaliLoader, { COLOR_PRESETS } from './MikaliLoader';
 
 export default function Home() {
   return (
@@ -151,15 +162,30 @@ export default function Home() {
       <MikaliLoader 
         mode="wave"
         duration={2800}
-        creamColor="#fff9e7"
+        preset="white_on_red"
         showWordmark={true}
+        showPresets={true}
         autoDismiss={false}
-        onComplete={() => console.log('Loaded!')}
+        onComplete={() => console.log('Emblem fill completed')}
+        onPresetChange={(preset) => console.log('Switched to:', preset.label)}
       />
       <main>
-        {/* Your website content */}
+        {/* Boutique website content */}
       </main>
     </>
   );
 }
 ```
+
+---
+
+## ⌨️ Keyboard Shortcuts (Demo Page)
+
+- **`1`**: White on Red (Signature)
+- **`2`**: Red on Black
+- **`3`**: Gold on White
+- **`4`**: Gold on Black
+- **`5`**: Gold on Red
+- **`6`**: Red on White
+- **`R` / `Space`**: Replay Fill
+- **`Esc`**: Reset to Blank Outline
