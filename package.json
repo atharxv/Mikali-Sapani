@@ -1,0 +1,19 @@
+{
+  "name": "mikali-sapani-loader",
+  "version": "1.0.0",
+  "description": "Mikali Sapani Signature Luxury Loading Screen Animation",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "mikali-sapani",
+    "luxury",
+    "loader",
+    "animation",
+    "svg"
+  ],
+  "author": "Prime Digital",
+  "license": "UNLICENSED"
+}
